@@ -1,0 +1,44 @@
+@import '../../designUtils/colors';
+
+.studentCard {
+    font-family: 'Raleway', monospace; // Web Font Loader CommonJSModule
+    display: flex;
+    border-bottom: 2px solid $lightest-gray;
+    
+    & > * {
+        margin-bottom: 5px;
+    }
+    
+    .picDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 160px;
+        padding: 20px 0;
+
+
+        .pic {
+            border: 2px solid $frame-gray;
+            border-radius: 100%;
+            width: 100px;
+        }
+    }
+    
+    .data {
+        display: flex;
+        flex-direction: column;
+        padding: 12px 0 10px 12px;
+
+        .name {
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 36px;
+            padding-bottom: 8px;
+        }
+        .desc {
+            line-height: 18px;
+            font-size: 14px;
+            padding-left: 17px;
+        }
+    }    
+}

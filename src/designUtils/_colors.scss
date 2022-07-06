@@ -1,0 +1,17 @@
+// This file will hold all colors for this project with Sass
+
+// this is a SASS variable, it begins with a $ followed by variable name
+$background-gray: #EFEFEF; // app background
+
+$lighter-gray: #D5D5D5; 
+$shadow-gray: gray; // studentList background
+
+$frame-gray: rgb(200, 200, 200); // pic border
+
+$lightest-gray: rgb(234, 234, 234);
+
+// We are going to make this SASS file a partial.  Partials are SASS files that contain 
+// snippets of CSS that you can include in other SASS files, it lets you modularize them.
+// A partial is a SASS file with a leading underscore:  _colors.scss
+// The underscore lets Sass know that the file is only a partial file and that it should not
+// be generated into a CSS file.  Sass partials are used with the @use rule.

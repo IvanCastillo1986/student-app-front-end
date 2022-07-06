@@ -1,0 +1,22 @@
+@import '../../designUtils/colors';
+
+.studentList {
+    width: 600px;
+    margin: 10vh auto;
+    height: 80vh;
+    background-color: white;
+    overflow-y: hidden;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px $shadow-gray;
+
+    &__noResults {
+        font-weight: 600;
+        margin: auto;
+        display: table;
+        padding-top: 200px;
+    }
+}
+
+.studentList:hover {
+    overflow-y: scroll;
+}
