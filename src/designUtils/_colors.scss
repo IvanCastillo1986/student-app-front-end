@@ -3,12 +3,16 @@
 // this is a SASS variable, it begins with a $ followed by variable name
 $background-gray: #EFEFEF; // app background
 
-$lighter-gray: #D5D5D5; 
 $shadow-gray: gray; // studentList background
+
+$lighter-gray: #D5D5D5; 
+$lightest-gray: rgb(234, 234, 234);
 
 $frame-gray: rgb(200, 200, 200); // pic border
 
-$lightest-gray: rgb(234, 234, 234);
+
+
+
 
 // We are going to make this SASS file a partial.  Partials are SASS files that contain 
 // snippets of CSS that you can include in other SASS files, it lets you modularize them.

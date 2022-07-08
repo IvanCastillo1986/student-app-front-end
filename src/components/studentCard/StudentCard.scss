@@ -1,44 +1,70 @@
 @import '../../designUtils/colors';
+@import '../../designUtils/fontDesign';
+
+
 
 .studentCard {
     font-family: 'Raleway', monospace; // Web Font Loader CommonJSModule
     display: flex;
+    width: 600px;
+    overflow-x: hidden;
     border-bottom: 2px solid $lightest-gray;
     
     & > * {
         margin-bottom: 5px;
     }
     
-    .picDiv {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 160px;
-        padding: 20px 0;
-
-
-        .pic {
-            border: 2px solid $frame-gray;
-            border-radius: 100%;
-            width: 100px;
-        }
+    &__pic {
+        border: 2px solid $frame-gray;
+        border-radius: 100%;
+        width: 90px;
+        height: 90px;
+        margin: 25px 15px 0 20px;
     }
     
-    .data {
+    &__data {
         display: flex;
         flex-direction: column;
         padding: 12px 0 10px 12px;
+        width: 100%;
 
-        .name {
+        &__name {
             text-transform: uppercase;
             font-weight: 900;
-            font-size: 36px;
+            font-size: 30px;
             padding-bottom: 8px;
         }
-        .desc {
-            line-height: 18px;
-            font-size: 14px;
-            padding-left: 17px;
+        &__desc {
+            @extend %gray-and-indented;
+            line-height: 20px;
         }
-    }    
+        &__gradesList {
+            margin-top: 10px;
+            @extend %gray-and-indented;
+            
+            span {
+                padding-left: 16px;
+                min-width: 60px;
+                display: inline-block;
+                // in order to use min-width on inline elements, we need to set it to inline-block
+                // inline elements don't have width, they just have what's inside of it. 
+                // So in order to set a width, it needs to be block or inline-block
+            }
+        }
+
+    }
+    
+    &__toggleIcons {
+        width: 25px;
+        margin-right: 18px;
+        color: $shadow-gray;
+        padding-top: 18px;
+    }
+    &__toggleIcon {
+        cursor: pointer;
+        &:hover {
+            // Remember that color names are not written in quotes!
+            color: black;
+        }
+    }
 }
