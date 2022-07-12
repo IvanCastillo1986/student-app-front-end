@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import StudentCard from '../studentCard/StudentCard';
 import SearchBar from '../searchBar/SearchBar';
 
@@ -26,7 +27,6 @@ export default function StudentList() {
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             setStudents(data.students);
         })
         // get our students
@@ -35,24 +35,25 @@ export default function StudentList() {
         
     }, []); // empty array means run on mount
     
-    function showSearchStudents(students) {
+    // ANOTHER WAY OF RENDING StudentCard
+    // function showSearchStudents(students) {
 
-        const searchResults = students.filter(student => {
-            return (
-                student.firstName.slice(0, searchTerm.length).toLowerCase() === searchTerm.toLowerCase() 
-                ||
-                student.lastName.slice(0, searchTerm.length).toLowerCase() === searchTerm.toLowerCase()
-            );
-        });
+    //     const searchResults = students.filter(student => {
+    //         return (
+    //             student.firstName.slice(0, searchTerm.length).toLowerCase() === searchTerm.toLowerCase() 
+    //             ||
+    //             student.lastName.slice(0, searchTerm.length).toLowerCase() === searchTerm.toLowerCase()
+    //         );
+    //     });
 
-        return searchResults.map((student) => {
-            return (
-                <div key={student.id}>
-                    <StudentCard student={student} />
-                </div>
-            );
-        });
-    };
+    //     return searchResults.map((student) => {
+    //         return (
+    //             <div key={student.id}>
+    //                 <StudentCard student={student} />
+    //             </div>
+    //         );
+    //     });
+    // };
 
     let filteredStudents = students;
     if (searchTerm) {

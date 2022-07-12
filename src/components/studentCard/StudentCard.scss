@@ -5,15 +5,18 @@
 
 .studentCard {
     font-family: 'Raleway', monospace; // Web Font Loader CommonJSModule
-    display: flex;
-    width: 600px;
-    overflow-x: hidden;
     border-bottom: 2px solid $lightest-gray;
+    background-color: white;
     
     & > * {
         margin-bottom: 5px;
     }
     
+    a {
+        display: flex;
+        text-decoration: none;
+        color: unset;
+    }
     &__pic {
         border: 2px solid $frame-gray;
         border-radius: 100%;
@@ -26,7 +29,7 @@
         display: flex;
         flex-direction: column;
         padding: 12px 0 10px 12px;
-        width: 100%;
+        width: 70%;
 
         &__name {
             text-transform: uppercase;
@@ -51,20 +54,20 @@
                 // So in order to set a width, it needs to be block or inline-block
             }
         }
-
-    }
     
-    &__toggleIcons {
-        width: 25px;
-        margin-right: 18px;
-        color: $shadow-gray;
-        padding-top: 18px;
-    }
-    &__toggleIcon {
-        cursor: pointer;
-        &:hover {
-            // Remember that color names are not written in quotes!
-            color: black;
+        &__toggleIcons {
+            width: 25px;
+            color: $shadow-gray;
+            padding-top: 18px;
         }
+        &__toggleIcon {
+            cursor: pointer;
+
+            &:hover {
+                // Remember that color names are not written in quotes!
+                color: black;
+            }
+        }
+
     }
 }
