@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import WebFont from 'webfontloader';
 
+import SingleTextInput from '../singleTextInput/SingleTextInput'
+
 import './StudentCard.scss';
 import { FaPlus } from 'react-icons/fa';
 import { FaMinus } from 'react-icons/fa';
 
 
 
-const StudentCard = ({ student }) => {
+const StudentCard = ({ student, tags, setTags }) => {
 
     // props deconstructed
-    const { pic, firstName, lastName, email, company, skill, grades } = student;
+    const { pic, firstname, lastname, email, company, skill, grades=[97, 83, 45] } = student;
 
     // hooks
-    const [showGrades, setShowGrades] = useState(false)
-    const [tagInput, setTagInput] = useState("")
-    const [tags, setTags] = useState([])
+    const [showGrades, setShowGrades] = useState(false);
+    const [tagInput, setTagInput] = useState("");
     
     useEffect(() => {
         WebFont.load({
@@ -38,18 +39,30 @@ const StudentCard = ({ student }) => {
         setShowGrades(!showGrades)
     }
 
-    const handleTagsInput = (e) => {
+    const handleTagInput = (e) => {
         const input = e.target.value
         setTagInput(input)
     }
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    // const handleSubmit = (e) => {
+    //     e.preventDefault()
         
-        const tagsArr = [...tags]
-        tagsArr.push(tagInput)
-        setTags(tagsArr)
+    //     const tagsArr = [...tags]
+    //     tagsArr.push(tagInput)
+    //     setTags(tagsArr)
 
-        setTagInput('')
+    //     setTagInput('')
+    // }
+
+    // USING TEXT INPUT TO SUBMIT TAGS INSTEAD OF FORM ELEMENT
+    const handleKeyPress = (e) => {
+
+        if (e.key === 'Enter') {
+            const tagsArr = [...tags]
+            tagsArr.push(tagInput)
+            setTags(tagsArr)
+
+            setTagInput('')
+        }
     }
 
 
@@ -60,7 +73,7 @@ const StudentCard = ({ student }) => {
 
             <div className="studentCard__data">
                 <div className="studentCard__data__name">
-                    {firstName} {lastName}
+                    {firstname} {lastname}
                 </div>
 
                 <div className="studentCard__data__desc">
@@ -76,30 +89,37 @@ const StudentCard = ({ student }) => {
                         )
                     })}
                 </div>
+                <div className='studentCard__tagCollection' onClick={(e) => {e.preventDefault()}}>
+                    {tags.map((tag, i) => {
+                        return (
+                            <span className='studentCard__tag' key={i}>{tag}</span>
+                            )
+                        })
+                    }
+                    {/* <form className='studentCard__tagInput' onSubmit={handleSubmit} > */}
+                        <SingleTextInput 
+                            handleKeyPress={handleKeyPress}
+                            value={tagInput}
+                            onChange={handleTagInput}
+                            placeHolder={"Add a tag"} 
+                            width={"35%"} 
+                            border={"2px solid $lighter-gray"}
+                            fontSize={"16px"}
+                            padding={"12px 0 10px 4px"}
+                            margin={"0"}
+                            display={'block'}
+                        />
+                    {/* </form> */}
+                </div>
             </div>
 
             <div className="studentCard__toggleIcons" >
                 {/* {!showGrades ? <FaPlus size="1.5em" className="studentCard__toggleIcon" /> : <FaMinus size="1.5em" className="studentCard__toggleIcon" />} */}
-                {!showGrades && <FaPlus size="1.5em" className="studentCard__toggleIcon" onClick={(e) => toggleGrades(e)}/>}
-                {showGrades && <FaMinus size="1.5em" className="studentCard__toggleIcon" onClick={(e) => toggleGrades(e)}/>}
+                {!showGrades && <FaPlus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => toggleGrades(e)}/>}
+                {showGrades && <FaMinus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => toggleGrades(e)}/>}
             </div>
             </Link>
 
-            <div className='studentCard__tagsCollection'>
-                {tags.map((tag, i) => {
-                    return (
-                        <span key={i}>{tag}</span>
-                    )
-                })}
-            </div>
-            <form className='studentCard__tagsInput' onSubmit={handleSubmit} >
-                <input 
-                    type="text" 
-                    value={tagInput} 
-                    onChange={handleTagsInput}
-                    placeholder="Add a tag" 
-                />
-            </form>
         </div>
     );
 

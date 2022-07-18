@@ -4,7 +4,7 @@
 
 
 .studentCard {
-    font-family: 'Raleway', monospace; // Web Font Loader CommonJSModule
+    font-family: 'Raleway'; // Web Font Loader CommonJSModule
     border-bottom: 2px solid $lightest-gray;
     background-color: white;
     
@@ -33,7 +33,7 @@
 
         &__name {
             text-transform: uppercase;
-            font-weight: 900;
+            font-weight: bolder;
             font-size: 30px;
             padding-bottom: 8px;
         }
@@ -42,7 +42,7 @@
             line-height: 20px;
         }
         &__gradesList {
-            margin-top: 10px;
+            margin: 10px 0 0 10px;
             @extend %gray-and-indented;
             
             span {
@@ -54,7 +54,7 @@
                 // So in order to set a width, it needs to be block or inline-block
             }
         }
-    
+        
         &__toggleIcons {
             width: 25px;
             color: $shadow-gray;
@@ -69,5 +69,21 @@
             }
         }
 
+    }
+
+    &__tagCollection {
+        @extend %gray-and-indented;
+        padding-top: 12px;
+    }
+    &__tag {
+        display: inline-block;
+        background-color: $tag-background;
+        color: rgb(69, 69, 69);
+        padding: 8px;
+        border-radius: 3px;
+        margin: 3px;
+    }
+    &__tagInput {
+        border-style: none;
     }
 }

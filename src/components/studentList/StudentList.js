@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import StudentCard from '../studentCard/StudentCard';
-import SearchBar from '../searchBar/SearchBar';
+import SingleTextInput from '../singleTextInput/SingleTextInput';
 
 import './StudentList.scss'
 
@@ -11,13 +11,20 @@ export default function StudentList() {
     // hooks
     const [students, setStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchTag, setSearchTag] = useState('');
+    const [tags, setTags] = useState([]);
 
     
     // functions
-    function handleSearch(e) {
-        const input = e.target.value
-        setSearchTerm(input)
-    }
+    function handleSearchName(e) {
+        const input = e.target.value;
+        setSearchTerm(input);
+    };
+
+    function handleSearchTag(e) {
+        const {value} = e.target;
+        setSearchTag(value);
+    };
 
     // useEffect() is what we use to populate the students array
     useEffect(() => {
@@ -27,11 +34,22 @@ export default function StudentList() {
         fetch(url)
         .then(response => response.json())
         .then(data => {
-            setStudents(data.students);
+            // TEMPORARILY ADDING GRADES SINCE IT DOESN'T EXIST IN DATABASE
+            // let students = data.map(student => {
+            //     student.grades = [68, 93, 90, 82]
+            //     return student
+            // })
+            
+            setStudents(data);
         })
         // get our students
         // update the students hook with the new data
-
+        // const tempGrades = [68, 93, 90, 82]
+        // const tempStudents = students.map(student => {
+        //     student.grades = tempGrades
+        // })
+        // setStudents(tempStudents)
+        // console.log(tempStudents)
         
     }, []); // empty array means run on mount
     
@@ -62,23 +80,31 @@ export default function StudentList() {
             return fullName.toLowerCase().includes(searchTerm.toLowerCase());
         });
     }
+    // if (searchTag) {
+    //     filteredStudents = students.filter((student) => {
+
+    //     });
+    // }
+
 
     
     // return or JSX
     return (
         <div className='studentList'>
-            <SearchBar searchTerm={searchTerm} handleSearch={handleSearch} />
-            {/* {showSearchStudents(students)} */}
+            <SingleTextInput value={searchTerm} onChange={handleSearchName} placeHolder={'Search by name'} width={'97%'} />
+            {/* {showSearchStudents(students)}
+
+            {/* <SingleTextInput value={searchTag} onChange={handleSearchTag} placeHolder={'Search by tag'} width={'97%'} /> */}
             
             {filteredStudents.map((student) => {
                 return (
                     <div key={student.id}>
-                        <StudentCard student={student} />
+                        <StudentCard student={student} tags={tags} setTags={setTags} />
                     </div>
                 );
             })} 
             {/* The object brackets automatically return within JSX. It's like using the 'return' keyword */}
-            {filteredStudents.length == 0 && <div className='studentList__noResults'>No Results</div>}
+            {/* {filteredStudents.length == 0 && <div className='studentList__noResults'>No Results</div>} */}
 
         </div>
     );

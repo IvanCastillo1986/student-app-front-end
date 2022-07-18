@@ -1,6 +1,12 @@
+// This page is for Sass 'class extends'
+// This allows us to write classes with properties that we can attach to other classes.
+// We can use this when we have a particular style that different elements in our project 
+// will use the same style for.
 
+// This extend class will be attached to most font within our studentCard, 
+// including studentCard__data and studentCard__tagCollection:
 %gray-and-indented {
-    padding-left: 15px;
+    margin-left: 15px;
     font-size: 14px;
     color: $shadow-gray;
 }
