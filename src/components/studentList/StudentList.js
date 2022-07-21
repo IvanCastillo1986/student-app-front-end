@@ -33,23 +33,9 @@ export default function StudentList() {
         // reach out to the backend
         fetch(url)
         .then(response => response.json())
-        .then(data => {
-            // TEMPORARILY ADDING GRADES SINCE IT DOESN'T EXIST IN DATABASE
-            // let students = data.map(student => {
-            //     student.grades = [68, 93, 90, 82]
-            //     return student
-            // })
-            
+        .then(data => {            
             setStudents(data);
         })
-        // get our students
-        // update the students hook with the new data
-        // const tempGrades = [68, 93, 90, 82]
-        // const tempStudents = students.map(student => {
-        //     student.grades = tempGrades
-        // })
-        // setStudents(tempStudents)
-        // console.log(tempStudents)
         
     }, []); // empty array means run on mount
     

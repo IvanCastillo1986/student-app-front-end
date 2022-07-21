@@ -54,21 +54,31 @@
                 // So in order to set a width, it needs to be block or inline-block
             }
         }
-        
-        &__toggleIcons {
-            width: 25px;
-            color: $shadow-gray;
-            padding-top: 18px;
-        }
-        &__toggleIcon {
-            cursor: pointer;
 
-            &:hover {
-                // Remember that color names are not written in quotes!
-                color: black;
-            }
-        }
+    }
 
+    &__toggleIcons {
+        width: 25px;
+        color: $shadow-gray;
+        padding-top: 18px;
+    }
+    &__toggleIcon {
+        cursor: pointer;
+
+        &:hover {
+            // Remember that color names are not written in quotes!
+            color: black;
+        }
+        // This BEM modifier only applies to an auto-icon that has this condition of spinning
+        // studentCard__toggleIcon-spinning
+        //    block      element   modifier
+        &-spinning {
+            animation: spin-animation 1.2s infinite;
+        }
+        @keyframes spin-animation {
+            from {transform: rotate(0deg);}
+            to {transform: rotate(360deg);}
+        }
     }
 
     &__tagCollection {
