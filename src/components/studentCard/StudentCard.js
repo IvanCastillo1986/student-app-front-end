@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import WebFont from 'webfontloader';
 
 import SingleTextInput from '../singleTextInput/SingleTextInput'
+import EmptyView from '../emptyView/EmptyView'
 
 import './StudentCard.scss';
 import { FaPlus } from 'react-icons/fa';
@@ -17,7 +18,7 @@ const StudentCard = ({ student, tags, setTags }) => {
     const { pic, firstname, lastname, email, company, skill, id } = student;
 
     // hooks
-    const [showGrades, setShowGrades] = useState(true);
+    const [showGrades, setShowGrades] = useState(false);
     const [tagInput, setTagInput] = useState("");
     const [grades, setGrades] = useState([])
     const [gradesLoading, setGradesLoading] = useState(false)
@@ -32,11 +33,6 @@ const StudentCard = ({ student, tags, setTags }) => {
 
     // functions
     const average = (grades) => {
-        // let sum = grades.reduce((prev, curr) => {
-        //     console.log('prev:', prev)
-        //     console.log('curr:', curr)
-        //     return Number(prev.grade) + Number(curr.grade)
-        // }, 0);
         let sum = 0;
         grades.map((grade) => {
             return sum += Number(grade.grade);
@@ -54,25 +50,25 @@ const StudentCard = ({ student, tags, setTags }) => {
         e.preventDefault()
         
         // Do we already have the grades?
-        
-        
         if (!grades.length > 0) {
             setGradesLoading(true)
 
             fetch(`https://student-app-backend-ivan.herokuapp.com/students/${id}/grades`)
             .then(res => res.json())
             .then(data => {
+                console.log(data.length)
                 setGrades(data)
                 setGradesLoading(false)
+                setShowGrades(!showGrades)
             })
         } else {
             setShowGrades(!showGrades)
         }
     }
     
-    useEffect(() => {
-        setShowGrades(!showGrades)
-    }, [grades]);
+    // useEffect(() => {
+    //     setShowGrades(!showGrades)
+    // }, [grades]);
 
     const handleTagInput = (e) => {
         const input = e.target.value
@@ -117,21 +113,27 @@ const StudentCard = ({ student, tags, setTags }) => {
                     <div>Skill: {skill}</div>
                 </div>
                 <div className='studentCard__data__gradesList' style={{"display": showGrades ? "block" : "none"}}>
-                    <div>Average: {average(grades)}%</div> {/* if grades is empty, show 0%*/}
+                    {grades.length > 0 &&
+                    <>
+                    <div>Average: {average(grades)}%</div>
                     {grades.map((grade, index) => {
                         return (
                             <div key={index}> <span>Test {index + 1}:</span> <span>{grade.grade}%</span> </div>
                         )
                     })}
+                    </>
+                    }
+                {grades.length === 0 && <EmptyView text='No grades for this student'/>}
                 </div>
-                <div className='studentCard__tagCollection' onClick={(e) => {e.preventDefault()}}>
-                    {/* {tags.map((tag, i) => {
+                
+                {/* <div className='studentCard__tagCollection' onClick={(e) => {e.preventDefault()}}>
+                    {tags.map((tag, i) => {
                         return (
                             <span className='studentCard__tag' key={i}>{tag}</span>
                             )
                         })
-                    } */}
-                    {/* <form className='studentCard__tagInput' onSubmit={handleSubmit} > */}
+                    }
+                    <form className='studentCard__tagInput' onSubmit={handleSubmit} >
                         <SingleTextInput 
                             handleKeyPress={handleKeyPress}
                             value={tagInput}
@@ -144,15 +146,15 @@ const StudentCard = ({ student, tags, setTags }) => {
                             margin={"0"}
                             display={'block'}
                         />
-                    {/* </form> */}
-                </div>
-            </div>
-
+                    </form>
+                </div> */}
+            </div> 
+            {/* end .data */}
             <div className="studentCard__toggleIcons" >
-                {/* {!showGrades ? <FaPlus size="1.5em" className="studentCard__toggleIcon" /> : <FaMinus size="1.5em" className="studentCard__toggleIcon" />} */}
-                {(gradesLoading) && <AiOutlineReload size="1.8em" className="studentCard__toggleIcon-spinning" />}
-                {(!showGrades && !gradesLoading) && <FaPlus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => fetchAndShowGrades(e)}/>}
-                {(showGrades && !gradesLoading) && <FaMinus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => hideGrades(e)}/>}
+                    {/* {!showGrades ? <FaPlus size="1.5em" className="studentCard__toggleIcon" /> : <FaMinus size="1.5em" className="studentCard__toggleIcon" />} */}
+                    {(gradesLoading) && <AiOutlineReload size="1.8em" className="studentCard__toggleIcon-spinning" />}
+                    {(!showGrades && !gradesLoading) && <FaPlus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => fetchAndShowGrades(e)}/>}
+                    {(showGrades && !gradesLoading) && <FaMinus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => hideGrades(e)}/>}
             </div>
             </Link>
 

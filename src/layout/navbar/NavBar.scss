@@ -1,0 +1,70 @@
+@import '../../designUtils/colors';
+
+
+.navbar {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 20%;
+
+    &__logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    &__menuItems {
+        width: 40%;
+    }
+    ul {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        list-style: none;
+    }
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    &__hamburger {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .navbar {
+        padding: 2%;
+        border-bottom: 1px solid $shadow-gray;
+        
+        &__logo {
+            float: left;
+        }
+        &__menuItems {
+            display: none;
+            z-index: 10;
+
+            &.active {
+                display: flex;
+                flex-direction: column;
+            }
+            ul {
+                flex-direction: column;
+                background-color: grey;
+                list-style: none;
+                text-decoration: none;
+                
+                a {
+                    text-decoration: none;
+                    color: black;
+                }
+            }
+        }
+        &__hamburger {
+            display: block;
+            font-weight: 600;
+            font-size: 24px;
+        }
+    }
+}

@@ -58,7 +58,6 @@
     }
 
     &__toggleIcons {
-        width: 25px;
         color: $shadow-gray;
         padding-top: 18px;
     }
@@ -95,5 +94,18 @@
     }
     &__tagInput {
         border-style: none;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .studentCard {
+
+        &__data {
+            width: 57%;
+            
+            &__name {
+                font-size: 20px;
+            }
+        }
     }
 }

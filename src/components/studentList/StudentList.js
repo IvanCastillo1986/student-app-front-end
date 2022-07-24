@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import StudentCard from '../studentCard/StudentCard';
 import SingleTextInput from '../singleTextInput/SingleTextInput';
+import EmptyView from '../emptyView/EmptyView';
 
 import './StudentList.scss'
 
@@ -9,10 +10,12 @@ import './StudentList.scss'
 export default function StudentList() {
 
     // hooks
+    const [loading, setLoading] = useState(false)
     const [students, setStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchTag, setSearchTag] = useState('');
     const [tags, setTags] = useState([]);
+
 
     
     // functions
@@ -28,13 +31,17 @@ export default function StudentList() {
 
     // useEffect() is what we use to populate the students array
     useEffect(() => {
+        setLoading(true)
+
         const url = 'https://student-app-backend-ivan.herokuapp.com/students';
 
         // reach out to the backend
         fetch(url)
         .then(response => response.json())
         .then(data => {            
+            console.log(data)
             setStudents(data);
+            setLoading(false)
         })
         
     }, []); // empty array means run on mount
@@ -62,7 +69,7 @@ export default function StudentList() {
     let filteredStudents = students;
     if (searchTerm) {
         filteredStudents = students.filter((student) => {
-            let fullName = `${student.firstName} ${student.lastName}`;
+            let fullName = `${student.firstname} ${student.lastname}`;
             return fullName.toLowerCase().includes(searchTerm.toLowerCase());
         });
     }
@@ -90,7 +97,13 @@ export default function StudentList() {
                 );
             })} 
             {/* The object brackets automatically return within JSX. It's like using the 'return' keyword */}
-            {/* {filteredStudents.length == 0 && <div className='studentList__noResults'>No Results</div>} */}
+            {/* Passing in the value 'center' automatically makes it a boolean, even though it's not defined, much like the way
+            in MaterialUI or similar library, we can simply hand in flags such as "disabled" which equals a boolean,
+            and it does not need to be defined */}
+            {loading && <EmptyView text='Loading...' center />}
+
+            {searchTerm && filteredStudents.length === 0 && <EmptyView center />}
+            
 
         </div>
     );
