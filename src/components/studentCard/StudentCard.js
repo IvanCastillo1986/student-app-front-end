@@ -4,10 +4,10 @@ import WebFont from 'webfontloader';
 
 import SingleTextInput from '../singleTextInput/SingleTextInput'
 import EmptyView from '../emptyView/EmptyView'
+import DialogBox from '../dialogueBox/DialogBox'
 
 import './StudentCard.scss';
-import { FaPlus } from 'react-icons/fa';
-import { FaMinus } from 'react-icons/fa';
+import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
 import { AiOutlineReload } from 'react-icons/ai';
 
 
@@ -20,8 +20,10 @@ const StudentCard = ({ student, tags, setTags }) => {
     // hooks
     const [showGrades, setShowGrades] = useState(false);
     const [tagInput, setTagInput] = useState("");
-    const [grades, setGrades] = useState([])
-    const [gradesLoading, setGradesLoading] = useState(false)
+    const [grades, setGrades] = useState([]);
+    const [gradesLoading, setGradesLoading] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
     
     useEffect(() => {
         WebFont.load({
@@ -65,10 +67,23 @@ const StudentCard = ({ student, tags, setTags }) => {
             setShowGrades(!showGrades)
         }
     }
-    
-    // useEffect(() => {
-    //     setShowGrades(!showGrades)
-    // }, [grades]);
+    const showDeleteUserDialog = (e) => {
+        e.preventDefault()
+        setShowDeleteDialog(true)
+    }
+
+    const deleteUser = () => {
+
+        fetch(`https://student-app-backend-ivan.herokuapp.com/students/${id}`, {method: 'DELETE'})
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            // redirect to Home Page
+            // show toast that user was deleted
+        }).catch(err => {
+            // show toast that delete was unsuccessful
+        })
+    }
 
     const handleTagInput = (e) => {
         const input = e.target.value
@@ -150,14 +165,19 @@ const StudentCard = ({ student, tags, setTags }) => {
                 </div> */}
             </div> 
             {/* end .data */}
-            <div className="studentCard__toggleIcons" >
-                    {/* {!showGrades ? <FaPlus size="1.5em" className="studentCard__toggleIcon" /> : <FaMinus size="1.5em" className="studentCard__toggleIcon" />} */}
-                    {(gradesLoading) && <AiOutlineReload size="1.8em" className="studentCard__toggleIcon-spinning" />}
-                    {(!showGrades && !gradesLoading) && <FaPlus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => fetchAndShowGrades(e)}/>}
-                    {(showGrades && !gradesLoading) && <FaMinus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => hideGrades(e)}/>}
+            <div>
+                <div className="studentCard__toggleIcons" >
+                        {/* {!showGrades ? <FaPlus size="1.5em" className="studentCard__toggleIcon" /> : <FaMinus size="1.5em" className="studentCard__toggleIcon" />} */}
+                        {(gradesLoading) && <AiOutlineReload size="1.8em" className="studentCard__toggleIcon-spinning" />}
+                        {(!showGrades && !gradesLoading) && <FaPlus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => fetchAndShowGrades(e)}/>}
+                        {(showGrades && !gradesLoading) && <FaMinus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => hideGrades(e)}/>}
+                </div>
+                <div className="studentCard__toggleDelete" >
+                        {(!showGrades && !gradesLoading) && <FaTrash size="1.8em" className="studentCard__toggleIcon" onClick={(e) => showDeleteUserDialog(e)}/>}
+                </div>
             </div>
             </Link>
-
+            <DialogBox open={showDeleteDialog} setOpen={setShowDeleteDialog} deleteUser={deleteUser} />
         </div>
     );
 

@@ -8,6 +8,7 @@
     height: 60px;
     line-height: 60px;
     padding: 0 20%;
+    border-bottom: 2px solid rgb(211, 211, 211);
 
     &__logo {
         font-size: 24px;
@@ -43,6 +44,7 @@
         }
         &__menuItems {
             display: none;
+            position: relative;
             z-index: 10;
 
             &.active {
@@ -50,12 +52,21 @@
                 flex-direction: column;
             }
             ul {
+                position: absolute;
+                right: 0px;
+                width: 60%;
                 flex-direction: column;
                 background-color: grey;
                 list-style: none;
                 text-decoration: none;
-                
+                padding: 0;
+
+                li {
+                    margin: auto;
+                    padding: 0 15px;
+                }
                 a {
+                    margin: auto;
                     text-decoration: none;
                     color: black;
                 }
@@ -64,7 +75,7 @@
         &__hamburger {
             display: block;
             font-weight: 600;
-            font-size: 24px;
+            font-size: 24px;   
         }
     }
 }

@@ -4,12 +4,12 @@ body {
     background-color: $background-gray;
 }
 
-.App {
-    // margin: 20px;
+.pageContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 30px;
 }
 
 @media only screen and (max-width: 440px) {
-    .App {
-        margin: 0;
-    }
+
 }

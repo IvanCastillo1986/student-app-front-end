@@ -16,12 +16,14 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <Routes>
-        <Route index path="/" element={<StudentList />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/students/:id" element={<StudentDetailsPage />} />
-      </Routes>
+      <div className='pageContainer'>
+        <Routes>
+          <Route index path="/" element={<StudentList />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/students/:id" element={<StudentDetailsPage />} />
+        </Routes>
+      </div>
     </div>
   );
 }

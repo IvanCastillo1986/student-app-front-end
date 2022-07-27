@@ -29,6 +29,16 @@ export default function StudentDetailsPage(props) {
         }
     }, []);
     
+    // with the student id, we can fetch student info from our API
+
+    // delete student
+    // add icon to detail page
+    // on click open confirm dialog
+    // on cancel, close dialog
+    
+    // on confirm, show loader while delete happens
+    // on error, show toast that delete was not successful
+    // on success, redirect to home page and show toast that user was deleted
 
     return (
         <div className='studentDetailsPage'>
