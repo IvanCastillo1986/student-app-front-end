@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import StudentCard from '../studentCard/StudentCard';
 import SingleTextInput from '../singleTextInput/SingleTextInput';
 import EmptyView from '../emptyView/EmptyView';
+
+import { Alert, Snackbar } from '@mui/material';
 
 import './StudentList.scss'
 
@@ -10,13 +13,14 @@ import './StudentList.scss'
 export default function StudentList() {
 
     // hooks
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [students, setStudents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchTag, setSearchTag] = useState('');
     const [tags, setTags] = useState([]);
-
-
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    
+    const location = useLocation();
     
     // functions
     function handleSearchName(e) {
@@ -31,7 +35,7 @@ export default function StudentList() {
 
     // useEffect() is what we use to populate the students array
     useEffect(() => {
-        setLoading(true)
+        setLoading(true);
 
         const url = 'https://student-app-backend-ivan.herokuapp.com/students';
 
@@ -41,8 +45,13 @@ export default function StudentList() {
         .then(data => {            
             console.log(data)
             setStudents(data);
-            setLoading(false)
+            setLoading(false);
         })
+
+        if (location?.state?.studentName) {
+            setOpenSnackbar(true)
+            window.history.replaceState({}, document.title)
+        }
         
     }, []); // empty array means run on mount
     
@@ -84,6 +93,15 @@ export default function StudentList() {
     // return or JSX
     return (
         <div className='studentList'>
+            <Snackbar 
+                open={openSnackbar} 
+                autoHideDuration={1500} 
+                onClose={() => setOpenSnackbar(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                <Alert>{location.state ? location.state.studentName : 'Student'} has been deleted</Alert>
+            </Snackbar>
+
             <SingleTextInput value={searchTerm} onChange={handleSearchName} placeHolder={'Search by name'} width={'97%'} />
             {/* {showSearchStudents(students)}
 

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import WebFont from 'webfontloader';
 
 import SingleTextInput from '../singleTextInput/SingleTextInput'
 import EmptyView from '../emptyView/EmptyView'
+
 import DialogBox from '../dialogueBox/DialogBox'
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import './StudentCard.scss';
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
@@ -12,7 +15,7 @@ import { AiOutlineReload } from 'react-icons/ai';
 
 
 
-const StudentCard = ({ student, tags, setTags }) => {
+const StudentCard = ({ student, showDelete=false, tags, setTags }) => {
 
     // props deconstructed
     const { pic, firstname, lastname, email, company, skill, id } = student;
@@ -23,6 +26,10 @@ const StudentCard = ({ student, tags, setTags }) => {
     const [grades, setGrades] = useState([]);
     const [gradesLoading, setGradesLoading] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const [deleteUserLoading, setDeleteUserLoading] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [test, setTest] = useState('');
+    const navigate = useNavigate();
 
     
     useEffect(() => {
@@ -44,51 +51,56 @@ const StudentCard = ({ student, tags, setTags }) => {
     };
 
     const hideGrades = (e) => {
-        e.preventDefault()
-        setShowGrades(!showGrades)
+        e.preventDefault();
+        setShowGrades(!showGrades);
     };
     
     const fetchAndShowGrades = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         
         // Do we already have the grades?
         if (!grades.length > 0) {
-            setGradesLoading(true)
+            setGradesLoading(true);
 
             fetch(`https://student-app-backend-ivan.herokuapp.com/students/${id}/grades`)
             .then(res => res.json())
             .then(data => {
-                console.log(data.length)
-                setGrades(data)
-                setGradesLoading(false)
-                setShowGrades(!showGrades)
+                setGrades(data);
+                setGradesLoading(false);
+                setShowGrades(!showGrades);
             })
         } else {
-            setShowGrades(!showGrades)
+            setShowGrades(!showGrades);
         }
-    }
+    };
     const showDeleteUserDialog = (e) => {
-        e.preventDefault()
-        setShowDeleteDialog(true)
-    }
+        e.preventDefault();
+        setShowDeleteDialog(true);
+    };
 
     const deleteUser = () => {
+
+        setDeleteUserLoading(true);
 
         fetch(`https://student-app-backend-ivan.herokuapp.com/students/${id}`, {method: 'DELETE'})
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            // redirect to Home Page
-            // show toast that user was deleted
+            navigate("/", {
+                state: { studentName: `${data.firstname} ${data.lastname}` }
+            });
+
+            setDeleteUserLoading(false);
+
         }).catch(err => {
-            // show toast that delete was unsuccessful
+            setOpenSnackbar(true);
+            setDeleteUserLoading(false);
         })
-    }
+    };
 
     const handleTagInput = (e) => {
-        const input = e.target.value
-        setTagInput(input)
-    }
+        const input = e.target.value;
+        setTagInput(input);
+    };
     // const handleSubmit = (e) => {
     //     e.preventDefault()
         
@@ -103,17 +115,27 @@ const StudentCard = ({ student, tags, setTags }) => {
     const handleKeyPress = (e) => {
 
         if (e.key === 'Enter') {
-            const tagsArr = [...tags]
-            tagsArr.push(tagInput)
-            setTags(tagsArr)
+            const tagsArr = [...tags];
+            tagsArr.push(tagInput);
+            setTags(tagsArr);
 
-            setTagInput('')
+            setTagInput('');
         }
-    }
+    };
 
 
     return (
         <div className="studentCard">
+            <Snackbar 
+                open={openSnackbar} 
+                autoHideDuration={1500} 
+                onClose={() => setOpenSnackbar(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert severity="error">An error occured while deleting</Alert>
+            </Snackbar>
+
+
             <Link to={`/students/${student.id}`} state={{student: student}}>
             <img className="studentCard__pic" src={pic} alt="profile picture" />
 
@@ -172,9 +194,11 @@ const StudentCard = ({ student, tags, setTags }) => {
                         {(!showGrades && !gradesLoading) && <FaPlus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => fetchAndShowGrades(e)}/>}
                         {(showGrades && !gradesLoading) && <FaMinus size="1.8em" className="studentCard__toggleIcon" onClick={(e) => hideGrades(e)}/>}
                 </div>
-                <div className="studentCard__toggleDelete" >
-                        {(!showGrades && !gradesLoading) && <FaTrash size="1.8em" className="studentCard__toggleIcon" onClick={(e) => showDeleteUserDialog(e)}/>}
-                </div>
+                { showDelete &&
+                    <div className="studentCard__toggleDelete" >
+                            {(!showGrades && !gradesLoading) && <FaTrash size="1.8em" className="studentCard__toggleIcon" onClick={(e) => showDeleteUserDialog(e)}/>}
+                    </div>
+                }
             </div>
             </Link>
             <DialogBox open={showDeleteDialog} setOpen={setShowDeleteDialog} deleteUser={deleteUser} />
