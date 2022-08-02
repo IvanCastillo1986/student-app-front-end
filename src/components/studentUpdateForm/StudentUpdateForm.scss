@@ -1,0 +1,27 @@
+@import '../../designUtils/colors';
+@import '../../designUtils/fontDesign';
+
+
+
+.studentUpdateForm {
+    background-color: white;
+    border-bottom: 2px solid $lightest-gray;
+    padding: 10px;
+
+    &__title {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    &__inputs {
+        padding: 20px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 10px;
+        row-gap: 10px;
+    }
+    &__submit {
+        display: flex;
+        justify-content: end;
+    }
+
+}

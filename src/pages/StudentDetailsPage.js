@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 import StudentCard from '../components/studentCard/StudentCard';
+import StudentUpdateForm from '../components/studentUpdateForm/StudentUpdateForm';
 
 
 
@@ -29,20 +30,19 @@ export default function StudentDetailsPage(props) {
         }
     }, []);
     
-    // with the student id, we can fetch student info from our API
+    // update student
+    // create update component
+    // with form for all fields
+    // on submit, show loader
+    // on success, show toast (success - green)
+    // on fail, show toast (error - red)
 
-    // delete student
-    // add icon to detail page
-    // on click open confirm dialog
-    // on cancel, close dialog
 
-    // on confirm, show loader while delete happens
-    // on error, show toast that delete was not successful
-    // on success, redirect to home page and show toast that user was deleted
 
     return (
         <div className='studentDetailsPage'>
             {Object.keys(student).length > 0 && <StudentCard student={student} showDelete />}
+            <StudentUpdateForm />
         </div>
     );
 };
