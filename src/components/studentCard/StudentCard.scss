@@ -1,5 +1,6 @@
 @import '../../designUtils/colors';
 @import '../../designUtils/fontDesign';
+@import '../../designutils/animations';
 
 
 
@@ -72,12 +73,12 @@
         // studentCard__toggleIcon-spinning
         //    block      element   modifier
         &-spinning {
-            animation: spin-animation 1.2s infinite;
+            @extend %spinning-icon;
         }
-        @keyframes spin-animation {
-            from {transform: rotate(0deg);}
-            to {transform: rotate(360deg);}
-        }
+        // @keyframes spin-animation {
+        //     from {transform: rotate(0deg);}
+        //     to {transform: rotate(360deg);}
+        // }
     }
 
     &__tagCollection {

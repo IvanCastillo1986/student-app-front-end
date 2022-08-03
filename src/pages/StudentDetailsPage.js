@@ -42,7 +42,7 @@ export default function StudentDetailsPage(props) {
     return (
         <div className='studentDetailsPage'>
             {Object.keys(student).length > 0 && <StudentCard student={student} showDelete />}
-            <StudentUpdateForm />
+            <StudentUpdateForm student={student} />
         </div>
     );
 };

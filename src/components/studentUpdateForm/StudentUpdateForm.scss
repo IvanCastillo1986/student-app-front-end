@@ -1,5 +1,6 @@
 @import '../../designUtils/colors';
 @import '../../designUtils/fontDesign';
+@import '../../designUtils/animations';
 
 
 
@@ -21,7 +22,10 @@
     }
     &__submit {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
+    }
+    &__submitLoader-spinning {
+        @extend %spinning-icon;
     }
 
 }
