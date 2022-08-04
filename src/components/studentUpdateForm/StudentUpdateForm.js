@@ -10,7 +10,7 @@ import './StudentUpdateForm.scss'
 
 
 
-export default function StudentUpdateForm({ student }) {
+export default function StudentUpdateForm({ student, setStudent }) {
 
     const [firstname, setFirstname] = useState(student.firstname)
     const [lastname, setLastname] = useState(student.lastname)
@@ -22,6 +22,7 @@ export default function StudentUpdateForm({ student }) {
     const [noChanges, setNoChanges] = useState(true)
     const [loading, setLoading] = useState(false)
     const [showSnackbar, setShowSnackbar] = useState(false)
+    const [successfulUpdate, setSuccessfulUpdate] = useState(true)
 
     const handleChange = (e) => {
         setNoChanges(false)
@@ -72,17 +73,24 @@ export default function StudentUpdateForm({ student }) {
                 // there are two types of errors we can get here:
                 // one is, we can get a response back, that just returns a response which 
                 // isn't what we expected in which case we want to handle this as an error
+                console.log('Has accomplished update and fetched data')
                 console.log(data)
                 setNoChanges(true)
-                // TODO: Success Snackbar
+                setSuccessfulUpdate(true)
+                setShowSnackbar(true)
                 setLoading(false)
+                setStudent(data)
             }).catch(err => {
                 console.log('catching error, should setLoading false and setSnackbar true')
                 setLoading(false)
                 // Let user know an error has occurred
+                setSuccessfulUpdate(false)
                 setShowSnackbar(true)
             })
     }
+
+    const errorElement = <Alert severity="error">An error occured while updating</Alert>
+    const successElement = <Alert severity="success">Student updated successfully!</Alert>
 
     return (
         <div className='studentUpdateForm'>
@@ -92,7 +100,7 @@ export default function StudentUpdateForm({ student }) {
                 onClose={() => setShowSnackbar(false)}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
-                <Alert severity="error">An error occured while updating</Alert>
+                {successfulUpdate ? successElement : errorElement} 
             </Snackbar>
             <div className='studentUpdateForm__title'>Update Form</div>
             <div className='studentUpdateForm__inputs'>

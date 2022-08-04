@@ -54,26 +54,6 @@ export default function StudentList() {
         }
         
     }, []); // empty array means run on mount
-    
-    // ANOTHER WAY OF RENDING StudentCard
-    // function showSearchStudents(students) {
-
-    //     const searchResults = students.filter(student => {
-    //         return (
-    //             student.firstName.slice(0, searchTerm.length).toLowerCase() === searchTerm.toLowerCase() 
-    //             ||
-    //             student.lastName.slice(0, searchTerm.length).toLowerCase() === searchTerm.toLowerCase()
-    //         );
-    //     });
-
-    //     return searchResults.map((student) => {
-    //         return (
-    //             <div key={student.id}>
-    //                 <StudentCard student={student} />
-    //             </div>
-    //         );
-    //     });
-    // };
 
     let filteredStudents = students;
     if (searchTerm) {
@@ -103,7 +83,6 @@ export default function StudentList() {
             </Snackbar>
 
             <SingleTextInput value={searchTerm} onChange={handleSearchName} placeHolder={'Search by name'} width={'97%'} />
-            {/* {showSearchStudents(students)}
 
             {/* <SingleTextInput value={searchTag} onChange={handleSearchTag} placeHolder={'Search by tag'} width={'97%'} /> */}
             
@@ -114,7 +93,6 @@ export default function StudentList() {
                     </div>
                 );
             })} 
-            {/* The object brackets automatically return within JSX. It's like using the 'return' keyword */}
             {/* Passing in the value 'center' automatically makes it a boolean, even though it's not defined, much like the way
             in MaterialUI or similar library, we can simply hand in flags such as "disabled" which equals a boolean,
             and it does not need to be defined */}

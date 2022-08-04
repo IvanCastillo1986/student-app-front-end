@@ -16,9 +16,9 @@ export default function StudentDetailsPage(props) {
     // do not throw error, and give null instead. It stops anything past 'state' from parsing
     useEffect(() => {
 
-        if (location.state?.student) {
-            setStudent(location.state?.student)
-        } else {
+        // if (location.state?.student) {
+        //     setStudent(location.state?.student)
+        // } else {
             fetch(`https://student-app-backend-ivan.herokuapp.com/students/${id}`)
                 // The line below was causing me an error, because it didn't have anything to parse as json. 
                 // I accidentally fetched the variable of ${student.id} when there was no student object yet, 
@@ -27,7 +27,7 @@ export default function StudentDetailsPage(props) {
                 .then(data => {
                     setStudent(data)
                 })
-        }
+        // }
     }, []);
     
     // update student
@@ -36,13 +36,15 @@ export default function StudentDetailsPage(props) {
     // on submit, show loader
     // on success, show toast (success - green)
     // on fail, show toast (error - red)
-
+    // update data on student page
 
 
     return (
         <div className='studentDetailsPage'>
+            {/* If the student object does not exist yet, do not render. 
+            This will cause errors when rendering props in the child components */}
             {Object.keys(student).length > 0 && <StudentCard student={student} showDelete />}
-            <StudentUpdateForm student={student} />
+            {Object.keys(student).length > 0 && <StudentUpdateForm student={student} setStudent={setStudent} />}
         </div>
     );
 };
