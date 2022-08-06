@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -6,11 +7,14 @@ import { AiOutlineReload } from 'react-icons/ai';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-import './StudentUpdateForm.scss'
+import './StudentForm.scss'
 
 
 
-export default function StudentUpdateForm({ student, setStudent }) {
+
+export default function StudentForm({ student={}, setStudent, title="Update", method="PUT" }) {
+
+    const navigate = useNavigate()
 
     const [firstname, setFirstname] = useState(student.firstname)
     const [lastname, setLastname] = useState(student.lastname)
@@ -57,12 +61,17 @@ export default function StudentUpdateForm({ student, setStudent }) {
         setLoading(true)
         
         // set our target url
-        const url = `https://student-app-backend-ivan.herokuapp.com/students/${student.id}`
+        let url = `https://student-app-backend-ivan.herokuapp.com/students`
+
+        if (method === 'PUT') {
+            url += `/${student.id}`
+        }
 
         // what data are we passing to our backend?
         // what http method are we using
         const requestOptions = {
-            method: 'PUT',
+            // when key/value are the same, we can use shorthand, which is for  method: method,
+            method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ firstName: firstname, lastName: lastname, company, city, skill, pic, email })
         }
@@ -70,18 +79,23 @@ export default function StudentUpdateForm({ student, setStudent }) {
         fetch(url, requestOptions)
             .then(res => res.json())
             .then(data => {
-                // there are two types of errors we can get here:
-                // one is, we can get a response back, that just returns a response which 
-                // isn't what we expected in which case we want to handle this as an error
-                console.log('Has accomplished update and fetched data')
-                console.log(data)
-                setNoChanges(true)
-                setSuccessfulUpdate(true)
-                setShowSnackbar(true)
-                setLoading(false)
-                setStudent(data)
+
+                if (method === 'POST') {
+                    navigate(`/students/${data.id}`, {
+                        state: {
+                            fromCreateStudent: true,
+                            studentName: `${data.firstname} ${data.lastname}`
+                        }
+                    })
+                } else {
+                    
+                    setNoChanges(true)
+                    setSuccessfulUpdate(true)
+                    setShowSnackbar(true)
+                    setLoading(false)
+                    setStudent(data)
+                }
             }).catch(err => {
-                console.log('catching error, should setLoading false and setSnackbar true')
                 setLoading(false)
                 // Let user know an error has occurred
                 setSuccessfulUpdate(false)
@@ -89,11 +103,12 @@ export default function StudentUpdateForm({ student, setStudent }) {
             })
     }
 
-    const errorElement = <Alert severity="error">An error occured while updating</Alert>
+    const action = method === 'PUT' ? 'updating' : 'adding student';
+    const errorElement = <Alert severity="error">An error occured while {action} - please try again later</Alert>
     const successElement = <Alert severity="success">Student updated successfully!</Alert>
 
     return (
-        <div className='studentUpdateForm'>
+        <div className='studentForm'>
             <Snackbar 
                 open={showSnackbar} 
                 autoHideDuration={1500} 
@@ -102,8 +117,8 @@ export default function StudentUpdateForm({ student, setStudent }) {
             >
                 {successfulUpdate ? successElement : errorElement} 
             </Snackbar>
-            <div className='studentUpdateForm__title'>Update Form</div>
-            <div className='studentUpdateForm__inputs'>
+            <div className='studentForm__title'>Update Form</div>
+            <div className='studentForm__inputs'>
                 <TextField 
                     id="outlined-basic" 
                     label="First Name" 
@@ -119,14 +134,15 @@ export default function StudentUpdateForm({ student, setStudent }) {
                 <TextField id="outlined-basic" label="Pic url" variant="outlined" value={pic} name='pic' onChange={(e) => handleChange(e)} />
                 <TextField id="outlined-basic" label="E-mail" variant="outlined" value={email} name='email' onChange={(e) => handleChange(e)} />
             </div>
-            <div className='studentUpdateForm__submit'>
+            <div className='studentForm__submit'>
                 <Button 
                     variant="contained" 
                     size="large" 
                     disabled={noChanges} 
                     onClick={handleSubmit} 
-                    endIcon={loading && <AiOutlineReload className="studentUpdateForm__submitLoader-spinning" />}>
-                    Update
+                    endIcon={loading && <AiOutlineReload className="studentForm__submitLoader-spinning" />}
+                >
+                    {title}
                 </Button>
             </div>
         </div>

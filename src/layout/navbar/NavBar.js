@@ -26,7 +26,9 @@ export default function NavBar(props) {
 
     return (
         <div className='navbar'>
-            <div className='navbar__logo'>Student App</div>
+            <div className='navbar__logo'>
+                <Link to='/'>Student App</Link>
+            </div>
 
             <div className={`navbar__menuItems ${showMenu && 'active'}`}>
                 <ul>
