@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import StudentCard from '../studentCard/StudentCard';
-import SingleTextInput from '../singleTextInput/SingleTextInput';
+// import SingleTextInput from '../singleTextInput/SingleTextInput';
+import SearchBar from '../searchBar/SearchBar';
 import EmptyView from '../emptyView/EmptyView';
 
 import { Alert, Snackbar } from '@mui/material';
@@ -23,7 +24,7 @@ export default function StudentList() {
     const location = useLocation();
     
     // functions
-    function handleSearchName(e) {
+    function handleSearch(e) {
         const input = e.target.value;
         setSearchTerm(input);
     };
@@ -81,8 +82,10 @@ export default function StudentList() {
                 >
                 <Alert>{location.state ? location.state.studentName : 'Student'} has been deleted</Alert>
             </Snackbar>
-
-            <SingleTextInput value={searchTerm} onChange={handleSearchName} placeHolder={'Search by name'} width={'97%'} />
+            
+            <SearchBar searchTerm={searchTerm} handleSearch={handleSearch} />
+            {/* Replaced with old SearchBar */}
+            {/* <SingleTextInput value={searchTerm} onChange={handleSearchName} placeHolder={'Search by name'} width={'97%'} /> */}
 
             {/* <SingleTextInput value={searchTag} onChange={handleSearchTag} placeHolder={'Search by tag'} width={'97%'} /> */}
             
