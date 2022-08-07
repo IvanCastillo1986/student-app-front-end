@@ -131,8 +131,8 @@ export default function StudentForm({ student={}, setStudent, title="Update", me
                 <TextField id="outlined-basic" label="Company" variant="outlined" value={company} name='company' onChange={(e) => handleChange(e)} />
                 <TextField id="outlined-basic" label="City" variant="outlined" value={city} name='city' onChange={(e) => handleChange(e)} />
                 <TextField id="outlined-basic" label="Skill" variant="outlined" value={skill} name='skill' onChange={(e) => handleChange(e)} />
-                <TextField id="outlined-basic" label="Pic url" variant="outlined" value={pic} name='pic' onChange={(e) => handleChange(e)} />
                 <TextField id="outlined-basic" label="E-mail" variant="outlined" value={email} name='email' onChange={(e) => handleChange(e)} />
+                <TextField id="outlined-basic" label="Pic url" variant="outlined" value={pic} name='pic' onChange={(e) => handleChange(e)} />
             </div>
             <div className='studentForm__submit'>
                 <Button 

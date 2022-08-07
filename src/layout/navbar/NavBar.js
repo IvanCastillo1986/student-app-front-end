@@ -26,22 +26,24 @@ export default function NavBar(props) {
 
     return (
         <div className='navbar'>
-            <div className='navbar__logo'>
-                <Link to='/'>Student App</Link>
-            </div>
+            <div className="navbar__links">
+                <div className='navbar__logo'>
+                    <Link to='/'>Student App</Link>
+                </div>
 
-            <div className={`navbar__menuItems ${showMenu && 'active'}`}>
-                <ul>
-                    {menuItems.map((menuItem, key) => {
-                        return(
-                        <li key={key}>
-                            <Link to={menuItem.url}>{menuItem.label}</Link>
-                        </li>
-                        )
-                    })}
-                </ul>
+                <div className={`navbar__menuItems ${showMenu && 'active'}`}>
+                    <ul>
+                        {menuItems.map((menuItem, key) => {
+                            return(
+                            <li key={key}>
+                                <Link to={menuItem.url}>{menuItem.label}</Link>
+                            </li>
+                            )
+                        })}
+                    </ul>
+                </div>
+                <div className="navbar__hamburger" onClick={() => {setShowMenu(!showMenu)}}>=</div>
             </div>
-            <div className="navbar__hamburger" onClick={() => {setShowMenu(!showMenu)}}>=</div>
         </div>
     )
 }
