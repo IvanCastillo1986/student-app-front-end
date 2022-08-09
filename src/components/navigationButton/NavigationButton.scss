@@ -7,4 +7,10 @@
     a {
         text-decoration: none;
     }
+
+    @media only screen and (max-width: 440px) {
+        width: auto;
+        margin: 0;
+        padding-bottom: 10px;
+    }
 }
