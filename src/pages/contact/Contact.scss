@@ -1,0 +1,32 @@
+@import '../../designUtils/colors';
+
+.contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+
+    &__title {
+        font-size: 40px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+    &__subheader {
+        color: $shadow-gray;
+        margin-bottom: 12px;
+    }
+    &__salesPoints {
+        background-color: #f9f5f1;
+        padding: 10px;
+    }
+    &__salesPoint {
+        display: flex;
+        padding: 10px;
+        &:not(:last-child) {
+            border-bottom: 1px solid black;
+        }
+    }
+    &__salesPointIcon {
+        font-size: 14px;
+        padding-right: 8px;
+    }
+}

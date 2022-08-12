@@ -56,7 +56,7 @@ export default function NavBar(props) {
                 }}
             ></div>
             <div className="navbar__links">
-                <div className='navbar__logo' onClick={() => setShowNavbarItems(false)}>
+                <div className='navbar__logo' onClick={() => {setShowNavbarItems(false); setShowMenu(false);}}>
                     <Link to='/'>Student App</Link>
                 </div>
 
@@ -64,7 +64,7 @@ export default function NavBar(props) {
                     <ul>
                         {menuItems.map((menuItem, key) => {
                             return(
-                            <li key={key} onClick={() => handleNavigation} data-url={menuItem.url}>
+                            <li key={key} onClick={(e) => handleNavigation(e)} data-url={menuItem.url}>
                                 {/* <Link to={menuItem.url} onClick={() => setShowMenu(!showMenu)}>{menuItem.label}</Link> */}
                                 {menuItem.label}
                             </li>
