@@ -45,8 +45,21 @@ export default function Contact() {
                     </div>
                 </div>
             </div>
-            <div className='contact__form'>
-                Contact Form
+            <div className='contact__data'>
+                <div className='contact__title'>Get In Touch </div>
+                {/* phone */}
+                <div className='contact__subheader'><span>Phone: </span>555-555-7369</div>
+
+                {/* address */}
+                <div className='contact__subheader'>Address:</div>
+                <div className='contact__subheader'>
+                    123 Sesame St <br />
+                    Podunk, Fl 79813
+                </div>
+
+                {/* email address */}
+                <div className='contact__subheader'><span>Email:</span> total180training@gmail.com</div>
+
             </div>
         </div>
     )

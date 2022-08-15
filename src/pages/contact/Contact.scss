@@ -29,4 +29,13 @@
         font-size: 14px;
         padding-right: 8px;
     }
+
+    @media only screen and (max-width: 440px) {
+        display: block;
+        margin: 0 15px 15px;
+
+        &__data {
+            margin-top: 15px;
+        }
+    }
 }
