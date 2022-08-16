@@ -15,7 +15,7 @@ import { AiOutlineReload } from 'react-icons/ai';
 
 
 
-const StudentCard = ({ student, showDelete=false, tags, setTags }) => {
+const StudentCard = ({ student, showDelete=false, tags=[], setTags }) => {
 
     // props deconstructed
     const { pic, firstname, lastname, email, company, skill, id } = student;
@@ -31,7 +31,7 @@ const StudentCard = ({ student, showDelete=false, tags, setTags }) => {
     const [test, setTest] = useState('');
     const navigate = useNavigate();
 
-    
+
     useEffect(() => {
         WebFont.load({
             google: {
@@ -39,6 +39,7 @@ const StudentCard = ({ student, showDelete=false, tags, setTags }) => {
             }
         });
     }, []);
+
 
     // functions
     const average = (grades) => {
@@ -101,15 +102,7 @@ const StudentCard = ({ student, showDelete=false, tags, setTags }) => {
         const input = e.target.value;
         setTagInput(input);
     };
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-        
-    //     const tagsArr = [...tags]
-    //     tagsArr.push(tagInput)
-    //     setTags(tagsArr)
 
-    //     setTagInput('')
-    // }
 
     // USING TEXT INPUT TO SUBMIT TAGS INSTEAD OF FORM ELEMENT
     const handleKeyPress = (e) => {
@@ -136,7 +129,7 @@ const StudentCard = ({ student, showDelete=false, tags, setTags }) => {
             </Snackbar>
 
 
-            <Link to={`/students/${student.id}`} state={{student: student}}>
+            <Link to={`/students/${student.id}`} state={{student: student, tags: tags}}>
             <img className="studentCard__pic" src={pic} alt="profile picture" />
 
             <div className="studentCard__data">
@@ -163,14 +156,15 @@ const StudentCard = ({ student, showDelete=false, tags, setTags }) => {
                 {grades.length === 0 && <EmptyView text='No grades for this student'/>}
                 </div>
                 
-                {/* <div className='studentCard__tagCollection' onClick={(e) => {e.preventDefault()}}>
-                    {tags.map((tag, i) => {
+                <div className='studentCard__tagCollection' onClick={(e) => {e.preventDefault()}}>
+                    {tags.length > 0 &&
+                    tags.map((tag, i) => {
                         return (
                             <span className='studentCard__tag' key={i}>{tag}</span>
                             )
                         })
                     }
-                    <form className='studentCard__tagInput' onSubmit={handleSubmit} >
+                    {/* <form className='studentCard__tagInput' onSubmit={(e) => e.preventDefault()} > */}
                         <SingleTextInput 
                             handleKeyPress={handleKeyPress}
                             value={tagInput}
@@ -183,8 +177,8 @@ const StudentCard = ({ student, showDelete=false, tags, setTags }) => {
                             margin={"0"}
                             display={'block'}
                         />
-                    </form>
-                </div> */}
+                    {/* </form> */}
+                </div>
             </div> 
             {/* end .data */}
             <div>

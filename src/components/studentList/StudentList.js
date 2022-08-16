@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import StudentCard from '../studentCard/StudentCard';
-// import SingleTextInput from '../singleTextInput/SingleTextInput';
+import SingleTextInput from '../singleTextInput/SingleTextInput';
 import SearchBar from '../searchBar/SearchBar';
 import EmptyView from '../emptyView/EmptyView';
 
@@ -87,7 +87,7 @@ export default function StudentList() {
             {/* Replaced with old SearchBar */}
             {/* <SingleTextInput value={searchTerm} onChange={handleSearchName} placeHolder={'Search by name'} width={'97%'} /> */}
 
-            {/* <SingleTextInput value={searchTag} onChange={handleSearchTag} placeHolder={'Search by tag'} width={'97%'} /> */}
+            <SingleTextInput value={searchTag} onChange={handleSearchTag} placeHolder={'Search by tag'} width={'97%'} />
             
             {filteredStudents.map((student) => {
                 return (

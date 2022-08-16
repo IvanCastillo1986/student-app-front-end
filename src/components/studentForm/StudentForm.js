@@ -9,11 +9,11 @@ import Snackbar from '@mui/material/Snackbar';
 
 import './StudentForm.scss'
 
+import isValidEmail from '../../utils/EmailValidation'
 
 
 
 export default function StudentForm({ student={}, setStudent, title="Update", method="PUT" }) {
-
     const navigate = useNavigate()
 
     const [firstname, setFirstname] = useState(student.firstname)
@@ -27,6 +27,7 @@ export default function StudentForm({ student={}, setStudent, title="Update", me
     const [loading, setLoading] = useState(false)
     const [showSnackbar, setShowSnackbar] = useState(false)
     const [successfulUpdate, setSuccessfulUpdate] = useState(true)
+    const [emailError, setEmailError] = useState({ isError: false, errorText: '' })
 
     const handleChange = (e) => {
         setNoChanges(false)
@@ -54,8 +55,18 @@ export default function StudentForm({ student={}, setStudent, title="Update", me
                 break;
         }
     }
+
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        // validate email
+        if (!isValidEmail(email)) {
+            console.log('E-mail is invalid. Please try again')
+            setEmailError({ isError: true, errorText: 'Invalid E-mail' })
+            return
+        } else {
+            setEmailError({ isError: false, errorText: '' })
+        }
         
         // set loading state
         setLoading(true)
@@ -131,7 +142,7 @@ export default function StudentForm({ student={}, setStudent, title="Update", me
                 <TextField id="outlined-basic" label="Company" variant="outlined" value={company} name='company' onChange={(e) => handleChange(e)} />
                 <TextField id="outlined-basic" label="City" variant="outlined" value={city} name='city' onChange={(e) => handleChange(e)} />
                 <TextField id="outlined-basic" label="Skill" variant="outlined" value={skill} name='skill' onChange={(e) => handleChange(e)} />
-                <TextField id="outlined-basic" label="E-mail" variant="outlined" value={email} name='email' onChange={(e) => handleChange(e)} />
+                <TextField error={emailError.isError} helperText={emailError.errorText} id="outlined-basic" label="E-mail" variant="outlined" value={email} name='email' onChange={(e) => handleChange(e)} />
                 <TextField id="outlined-basic" label="Pic url" variant="outlined" value={pic} name='pic' onChange={(e) => handleChange(e)} />
             </div>
             <div className='studentForm__submit'>

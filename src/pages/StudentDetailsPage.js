@@ -8,12 +8,13 @@ import { Alert, Snackbar } from '@mui/material';
 
 
 
-export default function StudentDetailsPage(props) {
+export default function StudentDetailsPage({ tags }) {
 
     const { id } = useParams();
     const location = useLocation();
     const [student, setStudent] = useState({});
     const [openSnackbar, setOpenSnackbar] = useState(false)
+    const [detailsPageTags, setDetailsPageTags] = useState([])
 
     // The ? is an optional chaining operator, telling js that if item is not present, 
     // do not throw error, and give null instead. It stops anything past 'state' from parsing
@@ -34,15 +35,12 @@ export default function StudentDetailsPage(props) {
                     setStudent(data)
                 })
         // }
-    }, []);
-    // update student
-    // create update component
-    // with form for all fields
-    // on submit, show loader
-    // on success, show toast (success - green)
-    // on fail, show toast (error - red)
-    // update data on student page
-
+        // This sets the StudentDetailsPage tags, to pass into StudentCard
+        if (location.state.tags) {
+            setDetailsPageTags(location.state.tags)
+        }
+    }, [location.state.tags]);
+    
 
     return (
         <div className='studentDetailsPage'>
@@ -56,7 +54,7 @@ export default function StudentDetailsPage(props) {
             </Snackbar>
             {/* If the student object does not exist yet, do not render. 
             This will cause errors when rendering props in the child components */}
-            {Object.keys(student).length > 0 && <StudentCard student={student} showDelete />}
+            {Object.keys(student).length > 0 && <StudentCard student={student} tags={detailsPageTags} setTags={setDetailsPageTags} showDelete />}
             {Object.keys(student).length > 0 && <StudentForm student={student} setStudent={setStudent} />}
         </div>
     );
