@@ -44,7 +44,6 @@ export default function StudentList() {
         fetch(url)
         .then(response => response.json())
         .then(data => {            
-            console.log(data)
             setStudents(data);
             setLoading(false);
         })
