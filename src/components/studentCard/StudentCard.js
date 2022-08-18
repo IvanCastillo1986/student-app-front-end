@@ -28,7 +28,6 @@ const StudentCard = ({ student, showDelete=false, tags=[], setTags }) => {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deleteUserLoading, setDeleteUserLoading] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [test, setTest] = useState('');
     const navigate = useNavigate();
 
 
@@ -109,7 +108,7 @@ const StudentCard = ({ student, showDelete=false, tags=[], setTags }) => {
 
         if (e.key === 'Enter') {
             const tagsArr = [...tags];
-            tagsArr.push(tagInput);
+            tagsArr.push({tagName: tagInput, id});
             setTags(tagsArr);
 
             setTagInput('');
@@ -160,11 +159,11 @@ const StudentCard = ({ student, showDelete=false, tags=[], setTags }) => {
                     {tags.length > 0 &&
                     tags.map((tag, i) => {
                         return (
-                            <span className='studentCard__tag' key={i}>{tag}</span>
+                            tag.id === id && 
+                            <span className='studentCard__tag' key={i}>{tag.tagName}</span>
                             )
                         })
                     }
-                    {/* <form className='studentCard__tagInput' onSubmit={(e) => e.preventDefault()} > */}
                         <SingleTextInput 
                             handleKeyPress={handleKeyPress}
                             value={tagInput}
@@ -177,7 +176,6 @@ const StudentCard = ({ student, showDelete=false, tags=[], setTags }) => {
                             margin={"0"}
                             display={'block'}
                         />
-                    {/* </form> */}
                 </div>
             </div> 
             {/* end .data */}

@@ -63,11 +63,17 @@ export default function StudentList() {
             return fullName.toLowerCase().includes(searchTerm.toLowerCase());
         });
     }
-    // if (searchTag) {
-    //     filteredStudents = students.filter((student) => {
+    if (searchTag) {
+        let tagResults = tags.filter((tag) => {
+            return tag.tagName.slice(0, searchTag.length).toLowerCase() === searchTag.toLowerCase()
+        })
 
-    //     });
-    // }
+        filteredStudents = students.filter((student) => {
+            for (let tag of tagResults) {
+                if (student.id === tag.id) return true
+            }
+        })
+    }
 
 
     
